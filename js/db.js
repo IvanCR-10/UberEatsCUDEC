@@ -1,10 +1,9 @@
 db.collection("platillos").onSnapshot((datos) => {
     datos.docChanges().forEach((registro) => {
     if (registro.type === "added") {
-        mostrarPlatillo(registro.doc.data(), registro.doc.id);
-       
+        mostrarPlatillo(registro.doc.data(), registro.doc.id); 
     }
-    if (registro.type === "modified"){
+    if (registro.type === "modified") {
         actualizarPlatillo(registro.doc.data(), registro.doc.id);
     }
   });
@@ -12,7 +11,7 @@ db.collection("platillos").onSnapshot((datos) => {
 
 const formularioAgregar = document.querySelector("form");
 formularioAgregar.addEventListener("submit", (e) => {
-e.preventDefault();
+    e.preventDefault();
 const platilloNuevo = {
     nombre: formularioAgregar.title.value,
     ingredientes:formularioAgregar.ingredientes.value,
@@ -20,13 +19,13 @@ const platilloNuevo = {
 
 }
 db.collection("platillos").add(platilloNuevo)
-.catch((error) =>{
+.catch((error) => {
     console.log(error);
     alert("Error al agregar platillo");
-})
-
+}
+);
 formularioAgregar.title.value = "";
-formularioAgregar.ingredientes.value = "";
-formularioAgregar.precio.value = "";
+formularioAgregar.ingredients.value = "";
+formularioAgregar.price.value = "";
 alert("Platillo Agregado");
 });

@@ -39,7 +39,7 @@ document.getElementById("btnUbicacion").addEventListener("click|",function(){
     let longitud = posicion.coords.longitud;
     fetch(`https://nomination.openstreetmap.org/reverse?lat=${latitud}&lon{longitud}&=format=json`,{
         headers:{
-            `User-Agent`: `UberEatsIVY (jcaudilloreyes@gmail.com)`
+            "User-Agent": "UberEatsIVY (jcaudilloreyes@gmail.com)"
         }
     })
 
@@ -47,8 +47,15 @@ document.getElementById("btnUbicacion").addEventListener("click|",function(){
     .then(data =>{
         let ciudad = data.addres.city;
         let pais = data.addres.country;
-        document.getElementById("direccion").value = `${ciudad}, ${pais}
+        document.getElementById("ubicacion").value = `${ciudad}, ${pais}`
+        var map = L.map("mapa").setView([latitud, longitud], 13);
+        L.titleLayer('https://title.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+        var marker = L.marker([51.5, -0.09]).addTo(map);
     })
+    
    }
   
 const formularioAgregar = document. querySelector("form");

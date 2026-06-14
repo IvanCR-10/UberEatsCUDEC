@@ -35,7 +35,21 @@ document.getElementById("btnUbicacion").addEventListener("click|",function(){
     }
 });
  function exito(posicion) {
-   
+    let latitud = posicion.coords.latitud;
+    let longitud = posicion.coords.longitud;
+    fetch(`https://nomination.openstreetmap.org/reverse?lat=${latitud}&lon{longitud}&=format=json`,{
+        headers:{
+            `User-Agent`: `UberEatsIVY (jcaudilloreyes@gmail.com)`
+        }
+    })
+
+    .then(respuesta => respuesta.json())
+    .then(data =>{
+        let ciudad = data.addres.city;
+        let pais = data.addres.country;
+        document.getElementById("direccion").value = `${ciudad}, ${pais}
+    })
+   }
   
 const formularioAgregar = document. querySelector("form");
 formularioAgregar. addEventListener("submit", (e) => {

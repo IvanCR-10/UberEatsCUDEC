@@ -20,6 +20,7 @@ db.collection("platillos").onSnapshot((datos) => {
 
 });
 
+
 function agregarALista(platillo, id){
     contenidoLista += `<option value='${id}'>
     ${platillo.nombre}
@@ -28,3 +29,31 @@ function agregarALista(platillo, id){
     
 }
 M.AutoInit();
+document.getElementById("btnUbicacion").addEventListener("click|",function(){
+    if(navigator.geolocation){
+        navigatior.geolocation.getCurrentPosition(exito,error);
+    }
+});
+ function exito(posicion) {
+   
+  
+const formularioAgregar = document. querySelector("form");
+formularioAgregar. addEventListener("submit", (e) => {
+   e.preventDefault();
+const platilloNuevo = {
+    nombre: formularioAgregar.title.value,
+    ingredientes: formularioAgregar.ingredients.value,
+    precio: formularioAgregar.price.value
+}
+
+db.collection("platillos").add(platilloNuevo)
+.catch((error) => {
+    console.log(error);
+    alert("Error al agregar platillo");
+ }
+ );
+ formularioAgregar.title.value = "";
+ formularioAgregar.ingredients.value = "";
+ formularioAgregar.price.value = "";
+ alert("Platillo agregado");
+});
